@@ -1,0 +1,4 @@
+enum MMKVRecoverStrategic {
+  OnErrorDiscard,
+  OnErrorRecover,
+}
