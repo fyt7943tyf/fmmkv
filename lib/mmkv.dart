@@ -557,9 +557,8 @@ class MMKV {
     ByteList valueRef = valuePtr.ref;
     valueRef.length = value.length;
     valueRef.data = allocate(count: value.length);
-    for (int i = 0; i < value.length; i++) {
-      valueRef.data.elementAt(i).value = value[i];
-    }
+    Uint8List nativeList = valueRef.data.asTypedList(value.length);
+    nativeList.setAll(0, value);
     int ans = _nativeEncodeUint8List(nativeHandle, keyPtr, valuePtr);
     free(keyPtr);
     free(valuePtr);
@@ -576,9 +575,8 @@ class MMKV {
     }
     ByteList retRef = ret.ref;
     Uint8List ans = Uint8List(retRef.length);
-    for (int i = 0; i < retRef.length; i++) {
-      ans[i] = retRef.data.elementAt(i).value;
-    }
+    Uint8List nativeList = retRef.data.asTypedList(retRef.length);
+    ans.setAll(0, nativeList);
     free(retRef.data);
     free(ret);
     return ans;
